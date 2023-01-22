@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react"
+
 import { createPortal } from "react-dom"
 import React, { Component } from "react";
 const modalRoot = document.querySelector('#modal-root')
@@ -7,7 +7,6 @@ export class Modal extends Component
 { 
     componentDidMount() {
         window.addEventListener('keydown', this.handleKeyD )
-        
     }
 
     componentWillUnmount(){
@@ -18,8 +17,6 @@ export class Modal extends Component
                 
                 this.props.onClose()
         }
-
-       
 
     }
  handleBackdropClick = e => {
