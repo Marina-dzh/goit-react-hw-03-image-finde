@@ -10,7 +10,7 @@ export class App extends Component{
   state = {
     query: "null",
     images: [],
-    page: 0,
+    page: 1,
     isLoading: false,
      total: 0,
     error: null,
@@ -20,26 +20,25 @@ export class App extends Component{
 async componentDidUpdate(pProps,pState)
 {
   if (pState.page !== this.state.page || pState.query !== this.state.query) {
-
-    this.setState({ isLoading: true, error: null })
-  
+    
     try {
       const images = await fetchGallery(this.state.query, this.state.page);
 
-      if (pState.page && pState.page!== this.state.page) {
-        this.setState(prevState =>({
-        images: prevState.images.concat(images.hits)
+      if (!images.hits) {
+        throw new Error(console.log("ooops"))
+      }
         
-        }))
+    this.setState(prevState => ({
+      images: prevState.images.concat(images.hits),
+      isLoading: true,
+      error: null,
+      total: images.totalHits
+    }))
        
-      } 
-      else{
-      this.setState({
-        images: images.hits,
-        total: images.totalHits,
-      })}
       
-  } catch (error) {
+      
+      
+  }  catch (error) {
       this.setState({ error });
     } finally {
      this.setState({ isLoading: false });
@@ -64,16 +63,17 @@ async componentDidUpdate(pProps,pState)
   }
     
   render() {
-    const { images,isLoading, error, total } = this.state;
+    const {page, images,isLoading, error, total } = this.state;
    
   return (
     <div className="App" >
       <Searchbar handleOnSubmit={this.handleOnSubmit} isLoading={isLoading} />
-      {error && <h2 style={{color:"teal"}}>{" Please try again" }</h2>}
+      {error && <h2 style={{color:"teal"}}>Please try again </h2>}
       
       {images && (<ImageGallery images={images} />)} 
       {isLoading && <Loader  />}
-{total > 12 && !error && !isLoading && <Button onClick={this.loadMore } /> }
+      {total > 12 * page && !error && !isLoading && <Button onClick={this.loadMore} />}
+      { total>1 && total <= 12 * page  && <p style={{color:"teal"}}>End of search </p>}
       <Toaster  toastOptions={{duration: 500}} />
     </div>
   );
