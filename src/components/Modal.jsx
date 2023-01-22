@@ -15,7 +15,7 @@ export class Modal extends Component
         }
     handleKeyD = e => {
         if (e.code === 'Escape') {
-                console.log("shoul close")
+                
                 this.props.onClose()
         }
 
@@ -23,9 +23,7 @@ export class Modal extends Component
 
     }
  handleBackdropClick = e => {
-            console.log("clickBackdrop")
-            console.log(e.currentTarget)
-     console.log(e.target)
+            
      if (e.currentTarget === e.target) {
          this.props.onClose()
      }

@@ -5,8 +5,7 @@ export const ImageGallery =(props)=> {
   
   
     const { images, error} = props 
-  //   console.log(this.state)
-  //  console.log(images)
+ 
     return (
       <div>
       
@@ -14,10 +13,7 @@ export const ImageGallery =(props)=> {
     
       {images && <ul className="ImageGallery">{images.map(item => (
         
-        <ImageGalleryItem key={item.id} item={item}  />))}</ul>
-      
-            }
-        
+        <ImageGalleryItem key={item.id} item={item}  />))}</ul>}
       </div>
   )
   
@@ -34,7 +30,6 @@ class ImageGalleryItem extends Component{
     })
   }
   
-    // ({ item: { webformatURL, largeImageURL, tags }, isOpen, toggle })
   
   render() {
     const {webformatURL, largeImageURL, tags} = this.props.item

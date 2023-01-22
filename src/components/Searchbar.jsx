@@ -11,7 +11,7 @@ export class Searchbar extends Component{
 
   onSearch = (e) => {
       e.preventDefault();
-      console.log("search")
+      
       const input = e.target.elements.searchQuery.value
     
       this.setState({

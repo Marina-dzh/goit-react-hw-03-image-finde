@@ -16,20 +16,7 @@ export class App extends Component{
     error: null,
  }
 
-  handleOnSubmit = (query) =>
-  {
-    console.log(query)
-    this.setState({ query, page:1, images:[]})
-  }
   
-
-   loadMore = () => {
-    console.log("click")
-    this.setState(pState => ({
-      page: pState.page + 1,
-      
-    }))
-  }
 async componentDidUpdate(pProps,pState)
 {
   if (pState.page !== this.state.page || pState.query !== this.state.query) {
@@ -61,19 +48,32 @@ async componentDidUpdate(pProps,pState)
   
   }
 }
+  handleOnSubmit = (query) =>
+  {
+    
+    this.setState({ query, page:1, images:[]})
+  }
   
+
+   loadMore = () => {
+    
+    this.setState(pState => ({
+      page: pState.page + 1,
+      
+    }))
+  }
     
   render() {
     const { images,isLoading, error, total } = this.state;
-    // console.log(images)
+   
   return (
     <div className="App" >
       <Searchbar handleOnSubmit={this.handleOnSubmit} isLoading={isLoading} />
-      {error && <h2>{" Please try again" }</h2>}
+      {error && <h2 style={{color:"teal"}}>{" Please try again" }</h2>}
       
       {images && (<ImageGallery images={images} />)} 
       {isLoading && <Loader  />}
-{total > 12 && !error && <Button onClick={this.loadMore } /> }
+{total > 12 && !error && !isLoading && <Button onClick={this.loadMore } /> }
       <Toaster  toastOptions={{duration: 500}} />
     </div>
   );
